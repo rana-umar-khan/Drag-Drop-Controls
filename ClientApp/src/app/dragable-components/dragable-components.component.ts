@@ -14,6 +14,11 @@ export class DragableComponentsComponent implements OnInit {
   numberField: FieldControl;
   textAreaField: FieldControl;
 
+  /**
+   * Initiliaze field controls with default values
+   * @param host
+   * @param appService
+   */
   constructor(private host: ElementRef, private appService: AppService) {
     this.textAreaField = {
       id: ControlsMapping.TextArea,
@@ -38,9 +43,9 @@ export class DragableComponentsComponent implements OnInit {
     };
   }
 
+  /**Fetch data from server on page load to restore controls on their last locations and dimensions */
   ngOnInit(): void {
     this.appService.getControlsData().subscribe(data => {
-      console.log(data);
       data.forEach(control => {
         if (control.id == ControlsMapping.Number) {
           this.numberField = control;
@@ -56,7 +61,10 @@ export class DragableComponentsComponent implements OnInit {
       });
     });
   }
-
+  /**
+   * Create tooltip text and return it to html
+   * @param type type of the control to identify which control is calling
+   */
   getTooltip(type: number): string {
     let target = document.getElementById("text-input-container") as HTMLElement;
     if (type == ControlsMapping.Number) {
@@ -69,6 +77,11 @@ export class DragableComponentsComponent implements OnInit {
     return 'Height: ' + (dimensions.height - 12).toString() + '\n Width: ' + (dimensions.width - 12).toString() + '\n Top: ' + (dimensions.top - 5).toString() + '\n Left: ' + (dimensions.left - 5).toString();
   }
 
+/**
+ * Text field resize event
+ * @param event mouseup event
+ * @param control if passed by ngOnInit it will resize based on that
+ */
   textResize(event?: Event, control?: FieldControl) {
     let target = document.getElementById("text-input-container") as HTMLElement;
     if (event && (event.target as HTMLElement).id !== "text-input-container")
@@ -85,6 +98,12 @@ export class DragableComponentsComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Number field resize event
+   * @param event mouseup event
+   * @param control if passed by ngOnInit it will resize based on that
+   */
   numberResize(event?: Event, control?: FieldControl) {
     let target = document.getElementById("number-input-container") as HTMLElement;
     if (event && (event.target as HTMLElement).id !== "number-input-container")
@@ -97,17 +116,24 @@ export class DragableComponentsComponent implements OnInit {
     else {
       inputElem.style.height = (parseInt(target.style.height.substring(0, target.style.height.length - 2)) - 2).toString() + 'px';
       inputElem.style.width = (parseInt(target.style.width.substring(0, target.style.width.length - 2)) - 18).toString() + 'px';
-      console.log(target.getBoundingClientRect());
       this.updateDataOnServer();
     }
   }
 
+  /**
+   * textarea resize is done by itself.
+   * no need to set its styles
+   * only post updated dimensions to server
+   * @param event
+   */
   textAreaResize(event: Event) {
-    if ((event.target as HTMLElement).id !== "number-input-container")
-      return;
     this.updateDataOnServer();
   }
 
+  /**extract all 3 controls dimensions
+   * and post those dimension to server
+   * Accomodate for paddings and margins
+   * */
   updateDataOnServer() {
     let allControls: FieldControl[] = [];
     //Text Field
@@ -130,7 +156,7 @@ export class DragableComponentsComponent implements OnInit {
       top: dimensions.top - 5,
       left: dimensions.left - 5
     });
-    //Text Field
+    //Text Area Field
     target = document.getElementById("text-area-container") as HTMLElement;
     dimensions = target.getBoundingClientRect();
     allControls.push({
@@ -141,7 +167,7 @@ export class DragableComponentsComponent implements OnInit {
       left: dimensions.left - 5
     });
     this.appService.saveControlsData(allControls).subscribe(response => {
-      console.log(response);
+      //saved on server
     });
   }
 

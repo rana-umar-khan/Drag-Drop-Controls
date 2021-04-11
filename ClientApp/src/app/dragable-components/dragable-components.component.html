@@ -13,7 +13,7 @@
   <input type="text"
          placeholder="Text" />
   <div class="tooltip-container">
-    <div class="hide" (mouseup)="updateDataOnServer()">
+    <div class="hide">
       <mat-icon [matTooltip]="getTooltip(1)" [matTooltipPosition]="'above'">
         info
       </mat-icon>
@@ -35,7 +35,7 @@
   </div>
   <input type="number" placeholder="Number" />
   <div class="tooltip-container">
-    <div class="hide" (mouseup)="updateDataOnServer()">
+    <div class="hide">
       <mat-icon [matTooltip]="getTooltip(2)" [matTooltipPosition]="'above'">
         info
       </mat-icon>
@@ -46,6 +46,7 @@
      id="text-area-container"
      [ngStyle]="{'top':textAreaField.top+'px','left':textAreaField.left+'px'}"
      style="position:absolute;"
+     (mouseup)="textAreaResize($event)"
      class="flex-container">
   <div class="toggle-container">
     <div cdkDragHandle class="hide" (mouseup)="updateDataOnServer()">
@@ -57,7 +58,7 @@
   <textarea placeholder="Text Area"
             [ngStyle]="{'height':textAreaField.height-4+'px','width':textAreaField.width-21+'px'}"></textarea>
   <div class="tooltip-container">
-    <div class="hide" (mouseup)="updateDataOnServer()">
+    <div class="hide">
       <mat-icon [matTooltip]="getTooltip(3)"
                 [matTooltipPosition]="'above'">
         info

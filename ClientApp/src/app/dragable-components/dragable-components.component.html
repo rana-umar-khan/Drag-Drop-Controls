@@ -1,0 +1,67 @@
+<div cdkDrag class="flex-container"
+     [ngStyle]="{'height':textField.height+'px','width':textField.width+'px','top':textField.top+'px','left':textField.left+'px'}"
+     style="position:absolute; overflow:auto;resize:both"
+     (mouseup)="textResize($event)"
+     id="text-input-container">
+  <div class="toggle-container">
+    <div cdkDragHandle class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon>
+        drag_indicator
+      </mat-icon>
+    </div>
+  </div>
+  <input type="text"
+         placeholder="Text" />
+  <div class="tooltip-container">
+    <div class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon [matTooltip]="getTooltip(1)" [matTooltipPosition]="'above'">
+        info
+      </mat-icon>
+    </div>
+  </div>
+</div>
+<div cdkDrag
+     class="flex-container"
+     id="number-input-container"
+     [ngStyle]="{'height':numberField.height+'px','width':numberField.width+'px','top':numberField.top+'px','left':numberField.left+'px'}"
+     style="position:absolute; overflow:auto;resize:both"
+     (mouseup)="numberResize($event)">
+  <div class="toggle-container">
+    <div cdkDragHandle class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon>
+        drag_indicator
+      </mat-icon>
+    </div>
+  </div>
+  <input type="number" placeholder="Number" />
+  <div class="tooltip-container">
+    <div class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon [matTooltip]="getTooltip(2)" [matTooltipPosition]="'above'">
+        info
+      </mat-icon>
+    </div>
+  </div>
+</div>
+<div cdkDrag
+     id="text-area-container"
+     [ngStyle]="{'top':textAreaField.top+'px','left':textAreaField.left+'px'}"
+     style="position:absolute;"
+     class="flex-container">
+  <div class="toggle-container">
+    <div cdkDragHandle class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon>
+        drag_indicator
+      </mat-icon>
+    </div>
+  </div>
+  <textarea placeholder="Text Area"
+            [ngStyle]="{'height':textAreaField.height-4+'px','width':textAreaField.width-21+'px'}"></textarea>
+  <div class="tooltip-container">
+    <div class="hide" (mouseup)="updateDataOnServer()">
+      <mat-icon [matTooltip]="getTooltip(3)"
+                [matTooltipPosition]="'above'">
+        info
+      </mat-icon>
+    </div>
+  </div>
+</div>

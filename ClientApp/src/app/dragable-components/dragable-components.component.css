@@ -1,0 +1,49 @@
+.flex-container{
+    display:flex;
+    flex-direction:row;
+    padding:5px;
+    margin:5px;
+    border:1px solid black;
+    width:fit-content;
+}
+input {
+  border: none;
+}
+
+textarea {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+.hide {
+  display: none;
+}
+.toggle-container{
+    min-height:28.8px;
+    min-width:24px;
+    margin-left:-8px;
+    margin-top:-4px;
+}
+.toggle-container:hover .hide {
+  display: block;
+}
+.tooltip-container {
+  height: 28.8px;
+  min-width: 24px;
+  margin-left: -23px;
+  margin-top: -4px;
+  z-index: 1;
+}
+
+  .tooltip-container:hover .hide {
+    display: block;
+  }
+::ng-deep .mat-tooltip {
+  white-space: pre-line !important;
+}
